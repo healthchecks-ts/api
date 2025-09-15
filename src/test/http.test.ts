@@ -66,8 +66,11 @@ describe('HttpHealthChecker', () => {
     });
 
     it('should handle request timeout errors', async () => {
-      const timeoutError = new Error('timeout of 5000ms exceeded') as AxiosError;
-      timeoutError.code = 'ECONNABORTED';
+      const timeoutError = {
+        isAxiosError: true,
+        code: 'ECONNABORTED',
+        message: 'timeout of 5000ms exceeded',
+      } as AxiosError;
       (mockedAxios.isAxiosError as any).mockReturnValue(true);
       mockedAxios.mockRejectedValueOnce(timeoutError);
 
@@ -78,8 +81,11 @@ describe('HttpHealthChecker', () => {
     });
 
     it('should handle connection refused errors', async () => {
-      const connectionError = new Error('connect ECONNREFUSED') as AxiosError;
-      connectionError.code = 'ECONNREFUSED';
+      const connectionError = {
+        isAxiosError: true,
+        code: 'ECONNREFUSED',
+        message: 'connect ECONNREFUSED',
+      } as AxiosError;
       (mockedAxios.isAxiosError as any).mockReturnValue(true);
       mockedAxios.mockRejectedValueOnce(connectionError);
 
@@ -90,8 +96,11 @@ describe('HttpHealthChecker', () => {
     });
 
     it('should handle host not found errors', async () => {
-      const hostError = new Error('getaddrinfo ENOTFOUND') as AxiosError;
-      hostError.code = 'ENOTFOUND';
+      const hostError = {
+        isAxiosError: true,
+        code: 'ENOTFOUND',
+        message: 'getaddrinfo ENOTFOUND',
+      } as AxiosError;
       (mockedAxios.isAxiosError as any).mockReturnValue(true);
       mockedAxios.mockRejectedValueOnce(hostError);
 
@@ -102,11 +111,14 @@ describe('HttpHealthChecker', () => {
     });
 
     it('should handle HTTP response errors', async () => {
-      const responseError = new Error('Request failed with status code 500') as AxiosError;
-      responseError.response = {
-        status: 500,
-        statusText: 'Internal Server Error',
-      } as any;
+      const responseError = {
+        isAxiosError: true,
+        response: {
+          status: 500,
+          statusText: 'Internal Server Error',
+        },
+        message: 'Request failed with status code 500',
+      } as AxiosError;
       (mockedAxios.isAxiosError as any).mockReturnValue(true);
       mockedAxios.mockRejectedValueOnce(responseError);
 
@@ -142,7 +154,7 @@ describe('HttpHealthChecker', () => {
       const result = await checker.check(mockConfig);
 
       expect(result.status).toBe(HealthStatus.UNHEALTHY);
-      expect(result.error).toBe('Unknown error occurred');
+      expect(result.error).toBe('String error');
     });
 
     it('should succeed after retries', async () => {
