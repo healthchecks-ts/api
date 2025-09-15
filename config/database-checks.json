@@ -1,0 +1,45 @@
+[
+  {
+    "id": "postgres-main",
+    "name": "PostgreSQL Main Database",
+    "type": "database",
+    "enabled": true,
+    "interval": 60000,
+    "timeout": 8000,
+    "retries": 2,
+    "tags": ["database", "critical", "postgres"],
+    "metadata": {
+      "connectionString": "postgresql://user:password@localhost:5432/maindb",
+      "databaseType": "postgresql",
+      "query": "SELECT 1 as health_check"
+    }
+  },
+  {
+    "id": "redis-cache",
+    "name": "Redis Cache",
+    "type": "database",
+    "enabled": true,
+    "interval": 30000,
+    "timeout": 3000,
+    "retries": 3,
+    "tags": ["cache", "redis"],
+    "metadata": {
+      "connectionString": "redis://localhost:6379",
+      "databaseType": "redis"
+    }
+  },
+  {
+    "id": "mongodb-docs",
+    "name": "MongoDB Documents",
+    "type": "database",
+    "enabled": false,
+    "interval": 45000,
+    "timeout": 10000,
+    "retries": 2,
+    "tags": ["database", "mongodb", "documents"],
+    "metadata": {
+      "connectionString": "mongodb://localhost:27017/documents",
+      "databaseType": "mongodb"
+    }
+  }
+]

@@ -1,0 +1,53 @@
+[
+  {
+    "id": "system-performance",
+    "name": "System Performance Check",
+    "type": "system",
+    "enabled": true,
+    "interval": 120000,
+    "timeout": 15000,
+    "retries": 1,
+    "tags": ["system", "performance"],
+    "metadata": {
+      "checks": [
+        {
+          "type": "memory",
+          "threshold": 85
+        },
+        {
+          "type": "cpu",
+          "threshold": 90
+        },
+        {
+          "type": "disk",
+          "threshold": 90,
+          "path": "/"
+        }
+      ]
+    }
+  },
+  {
+    "id": "disk-usage",
+    "name": "Disk Usage Monitor",
+    "type": "system",
+    "enabled": true,
+    "interval": 300000,
+    "timeout": 10000,
+    "retries": 1,
+    "tags": ["system", "storage"],
+    "metadata": {
+      "checks": [
+        {
+          "type": "disk",
+          "threshold": 80,
+          "path": "/var/log"
+        },
+        {
+          "type": "disk",
+          "threshold": 85,
+          "path": "/tmp"
+        }
+      ]
+    }
+  }
+]
