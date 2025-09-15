@@ -39,7 +39,7 @@ export class Logger {
   }
 
   logHealthCheckResult(result: HealthCheckResult): void {
-    const logLevel = result.status === 'unhealthy' ? 'warn' : 'info';
+    const logLevel = (result.status === 'unhealthy' || result.status === 'unknown') ? 'warn' : 'info';
     this.logger.log(logLevel, 'Health check executed', {
       checkId: result.id,
       checkName: result.name,
@@ -53,7 +53,7 @@ export class Logger {
   }
 
   logHealthSummary(summary: HealthSummary): void {
-    const logLevel = summary.status === 'unhealthy' ? 'warn' : 'info';
+    const logLevel = (summary.status === 'unhealthy' || summary.status === 'unknown') ? 'warn' : 'info';
     this.logger.log(logLevel, 'Health summary', {
       overallStatus: summary.status,
       totalChecks: summary.totalChecks,
