@@ -416,7 +416,7 @@ describe('Logger', () => {
       new Logger();
 
       expect(winston.transports.Console).toHaveBeenCalledWith({
-        format: expect.any(Object),
+        format: 'combined-format',
       });
 
       expect(winston.format.combine).toHaveBeenCalled();

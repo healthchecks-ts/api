@@ -49,7 +49,7 @@ export class DatabaseHealthChecker implements HealthChecker {
             responseTime: result.responseTime,
             ...(result.metadata && result.metadata),
           },
-          retryCount,
+          retryCount: attempt,
         };
       } catch (error) {
         retryCount = attempt;

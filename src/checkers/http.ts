@@ -47,7 +47,7 @@ export class HttpHealthChecker implements HealthChecker {
             url: httpConfig.url,
             method: httpConfig.method || 'GET',
           },
-          retryCount,
+          retryCount: attempt,
         };
       } catch (error) {
         retryCount = attempt;
@@ -160,10 +160,10 @@ export class HttpHealthChecker implements HealthChecker {
       if (axiosError.code === 'ENOTFOUND') {
         return 'Host not found';
       }
-      if (axiosError.response) {
+      if (axiosError.response && axiosError.response.status && axiosError.response.statusText) {
         return `HTTP ${axiosError.response.status}: ${axiosError.response.statusText}`;
       }
-      return axiosError.message;
+      return axiosError.message || 'Unknown axios error';
     }
 
     if (error instanceof Error) {
